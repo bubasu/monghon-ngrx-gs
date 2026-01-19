@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, input, output, signal, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-wheel-picker',
@@ -7,6 +7,8 @@ import { Component, input, output, signal } from '@angular/core';
   styleUrl: './wheel-picker.component.css',
 })
 export class WheelPickerComponent {
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLElement>;
+
   options = input<string[]>([]);
   protected pick = signal('');
   optionPicked = output<string>();
@@ -21,5 +23,16 @@ export class WheelPickerComponent {
       this.pick.set(picked);
       this.optionPicked.emit(picked);
     }
+  }
+
+  scrollToOption(index: number) {
+    const itemWidth = 48; // Gleicher Wert wie in onScroll
+    const container = this.scrollContainer.nativeElement;
+
+    // Scrolle das Element sanft in die Mitte
+    container.scrollTo({
+      left: index * itemWidth,
+      behavior: 'smooth'
+    });
   }
 }

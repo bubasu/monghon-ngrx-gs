@@ -9,13 +9,15 @@
 
   <!-- Scrollbarer Bereich -->
   <div
+    #scrollContainer
     (scroll)="onScroll($event)"
     class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide h-full items-center px-[104px]"
     style="scrollbar-width: none; -ms-overflow-style: none;"
   >
-    @for (char of options(); track char) {
+    @for (char of options(); track char; let i = $index) {
       <div
-        class="shrink-0 w-12 h-12 flex items-center justify-center text-2xl font-mono snap-center transition-transform"
+        (click)="scrollToOption(i)"
+        class="shrink-0 w-12 h-12 flex items-center justify-center text-2xl font-mono snap-center transition-transform cursor-pointer"
         [class.text-blue-600]="pick() === char"
         [class.scale-125]="pick() === char"
         [class.font-bold]="pick() === char"
