@@ -13,12 +13,12 @@
     class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide h-full items-center px-[104px]"
     style="scrollbar-width: none; -ms-overflow-style: none;"
   >
-    @for (char of picks(); track char) {
+    @for (char of options(); track char) {
       <div
-        class="flex-shrink-0 w-12 h-12 flex items-center justify-center text-2xl font-mono snap-center transition-transform"
-        [class.text-blue-600]="selectedLetter() === char"
-        [class.scale-125]="selectedLetter() === char"
-        [class.font-bold]="selectedLetter() === char"
+        class="shrink-0 w-12 h-12 flex items-center justify-center text-2xl font-mono snap-center transition-transform"
+        [class.text-blue-600]="pick() === char"
+        [class.scale-125]="pick() === char"
+        [class.font-bold]="pick() === char"
       >
         {{ char }}
       </div>

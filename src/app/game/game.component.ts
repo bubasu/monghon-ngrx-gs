@@ -29,4 +29,8 @@ export class GameComponent {
     this.store.dispatch(GameActions.guessLetter({ letter: this.guessedLetter() }));
     this.guessedLetter.set('');
   }
+
+  onOptionPicked($event: string) {
+    this.guessedLetter.set($event);
+  }
 }
