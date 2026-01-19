@@ -1,7 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { GameActions } from '../state';
-import { Game } from '../model';
+import { GameActions, selectGameState } from '../state';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,8 +12,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './game-component.css',
 })
 export class GameComponent {
-  private readonly store: Store<Game> = inject(Store);
-  game = this.store.selectSignal((state) => state);
+  private readonly store = inject(Store);
+  game = this.store.selectSignal(selectGameState);
   protected guessedLetter = signal('');
 
   startNewGame() {
@@ -22,6 +21,7 @@ export class GameComponent {
   }
 
   guessLetter() {
-    this.store.dispatch(GameActions.guessLetter({ letter: 'a' }));
+    this.store.dispatch(GameActions.guessLetter({ letter: this.guessedLetter() }));
+    this.guessedLetter.set('');
   }
 }

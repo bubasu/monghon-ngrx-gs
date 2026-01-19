@@ -1,14 +1,15 @@
-<button (click)="startNewGame()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  New Game
-</button>
-
-<div>{{ game().guessedWord }}</div>
-
-<input type="text" [(ngModel)]="guessedLetter" [maxLength]="1" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-
-<button (click)="guessLetter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Guess Letter
-</button>
+@if (game().phase === 'Initial') {
+  <button (click)="startNewGame()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    New Game
+  </button>
+} @else {
+  <div>{{ game().guessedWord }}</div>
+  <input type="text" [(ngModel)]="guessedLetter" [maxLength]="1"
+         class="shadow uppercase appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+  <button (click)="guessLetter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Guess Letter
+  </button>
+}
 
 
 

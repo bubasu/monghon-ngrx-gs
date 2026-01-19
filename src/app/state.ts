@@ -1,5 +1,5 @@
 import { Game } from './model';
-import { createActionGroup, createReducer, on, props } from '@ngrx/store';
+import { createActionGroup, createFeatureSelector, createReducer, on, props } from '@ngrx/store';
 
 export const GameActions = createActionGroup({
   source: 'Game',
@@ -15,7 +15,7 @@ export const initialState: Game = {
   guessedWord: '',
   cntCorrectGuesses: 0,
   cntIncorrectGuesses: 0,
-  maxCntIncorrectGuesses: 0,
+  maxCntIncorrectGuesses: 10,
 }
 
 export const gameReducer = createReducer(
@@ -47,3 +47,5 @@ export const gameReducer = createReducer(
     return newState;
   }),
 );
+
+export const selectGameState = createFeatureSelector<Game>('game');
