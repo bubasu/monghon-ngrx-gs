@@ -6,7 +6,7 @@
   <!-- <div>{{ game().guessedWord }}</div> -->
 
   @for (char of game().guessedWord; track char) {
-    <span class="text-4xl p-1">{{ char }}</span>
+    <span class="text-4lg p-1">{{ char }}</span>
   }
 
   <!--
@@ -14,11 +14,14 @@
          class="shadow uppercase appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
   -->
 
-  <app-wheel-picker [options]="alphabet" (optionPicked)="onOptionPicked($event)"></app-wheel-picker>
-
-  <button (click)="guessLetter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Guess
-  </button>
+  <div class="flex">
+    <app-wheel-picker [options]="alphabet" (optionPicked)="onOptionPicked($event)"></app-wheel-picker>
+    <button (click)="guessLetter()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+      </svg>
+    </button>
+  </div>
 }
 
 
