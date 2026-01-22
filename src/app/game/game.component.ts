@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { GameActions, gameFeature } from '../state';
+import { GameActions, gameFeature } from '../game.state';
 import { FormsModule } from '@angular/forms';
 import { WheelPickerComponent } from '../wheel-picker/wheel-picker.component';
 import { RandomWordService } from '../random-word.service';
@@ -24,7 +24,7 @@ export class GameComponent {
     String.fromCharCode(65 + i));
 
   startNewGame() {
-    this.store.dispatch(GameActions.newGame({ word: 'monghon' }));
+    this.store.dispatch(GameActions.newGame());
   }
 
   guessLetter() {

@@ -1,10 +1,10 @@
 import { Game } from './model';
-import { createActionGroup, createFeature, createReducer, on, props } from '@ngrx/store';
+import { createActionGroup, createFeature, createReducer, emptyProps, on, props } from '@ngrx/store';
 
 export const GameActions = createActionGroup({
   source: 'Game',
   events: {
-    'newGame': props<{word: string}>(),
+    'newGame': emptyProps(),
     'fetchWordSucceeded': props<{word: string}>(),
     'fetchWordFailed': props<{error: string}>(),
     'guessLetter': props<{letter: string}>(),
@@ -21,7 +21,7 @@ export const initialGameState: Game = {
 
 export const gameReducer = createReducer(
   initialGameState,
-  on(GameActions.newGame, (state, { word  }) =>
+  on(GameActions.fetchWordSucceeded, (state, { word  }) =>
     ({ ...state, phase: 'Playing', targetWord: word, guessedWord: '_'.repeat(word.length) })),
   on(GameActions.guessLetter, (state, { letter }) => {
     const guessedWordAsArray = [ ...state.guessedWord ];
@@ -52,3 +52,5 @@ export const gameFeature = createFeature({
   name: 'game',
   reducer: gameReducer
 });
+
+
