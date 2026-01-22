@@ -1,8 +1,9 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { GameActions, selectGameState } from '../state';
+import { GameActions, gameFeature } from '../state';
 import { FormsModule } from '@angular/forms';
 import { WheelPickerComponent } from '../wheel-picker/wheel-picker.component';
+import { RandomWordService } from '../random-word.service';
 
 @Component({
   selector: 'app-game',
@@ -15,7 +16,8 @@ import { WheelPickerComponent } from '../wheel-picker/wheel-picker.component';
 })
 export class GameComponent {
   private readonly store = inject(Store);
-  game = this.store.selectSignal(selectGameState);
+  private randomWordService = inject(RandomWordService);
+  game = this.store.selectSignal(gameFeature.selectGameState);
   protected guessedLetter = signal('');
 
   protected readonly alphabet = Array.from({ length: 26 }, (_, i) =>
@@ -32,5 +34,11 @@ export class GameComponent {
 
   onOptionPicked($event: string) {
     this.guessedLetter.set($event);
+  }
+
+  protected fetchRandomWord() {
+    this.randomWordService.fetchWord().subscribe(data => {
+      console.log(data);
+    })
   }
 }

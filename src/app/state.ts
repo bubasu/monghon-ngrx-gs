@@ -1,25 +1,26 @@
 import { Game } from './model';
-import { createActionGroup, createFeatureSelector, createReducer, on, props } from '@ngrx/store';
+import { createActionGroup, createFeature, createReducer, on, props } from '@ngrx/store';
 
 export const GameActions = createActionGroup({
   source: 'Game',
   events: {
     'newGame': props<{word: string}>(),
+    'fetchWordSucceeded': props<{word: string}>(),
+    'fetchWordFailed': props<{error: string}>(),
     'guessLetter': props<{letter: string}>(),
   },
 });
 
-export const initialState: Game = {
+export const initialGameState: Game = {
   phase: 'Initial',
   targetWord: '',
   guessedWord: '',
-  cntCorrectGuesses: 0,
   cntIncorrectGuesses: 0,
   maxCntIncorrectGuesses: 10,
 }
 
 export const gameReducer = createReducer(
-  initialState,
+  initialGameState,
   on(GameActions.newGame, (state, { word  }) =>
     ({ ...state, phase: 'Playing', targetWord: word, guessedWord: '_'.repeat(word.length) })),
   on(GameActions.guessLetter, (state, { letter }) => {
@@ -33,7 +34,6 @@ export const gameReducer = createReducer(
     }
     const newState = { ...state };
     if (foundLetter) {
-      newState.cntCorrectGuesses++;
       newState.guessedWord = guessedWordAsArray.join('');
       if (newState.guessedWord.indexOf('_') === -1) {
         newState.phase = 'Won';
@@ -48,4 +48,7 @@ export const gameReducer = createReducer(
   }),
 );
 
-export const selectGameState = createFeatureSelector<Game>('game');
+export const gameFeature = createFeature({
+  name: 'game',
+  reducer: gameReducer
+});
