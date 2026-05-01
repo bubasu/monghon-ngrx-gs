@@ -6,13 +6,11 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RandomWordService {
-
   http = inject(HttpClient);
 
   fetchWord(): Observable<string> {
-    return this.http.get<string[]>(
-      `https://random-word-api.herokuapp.com/word?number=1`)
-      .pipe(map(words => words[0]));
+    return this.http
+      .get<string[]>(`https://random-word-api.herokuapp.com/word?number=1`)
+      .pipe(map((words) => words[0]));
   }
-
 }

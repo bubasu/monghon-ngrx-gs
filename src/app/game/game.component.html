@@ -1,41 +1,46 @@
-  <div class="game-container paper-texture pencil-border">
-    <div class="story-selector">
-      <label for="storySelect">Szenario:</label>
-      <select id="storySelect" [(ngModel)]="selectedStory">
-        @for (story of allStories; track story) {
-          <option [value]="story">{{ STORY_LABELS[story] }}</option>
-        }
-      </select>
-    </div>
-
-    <div class="illustration-wrapper">
-      <app-illustration [story]="selectedStory()" [drama]="drama()"></app-illustration>
-    </div>
-
-    <div class="word-display">
-      @for (char of game().guessedWord; track $index) {
-        <span class="char-box">{{ char !== '_' ? char : '' }}</span>
+<div class="game-container paper-texture pencil-border">
+  <div class="story-selector">
+    <label for="storySelect">Szenario:</label>
+    <select id="storySelect" [(ngModel)]="selectedStory">
+      @for (story of allStories; track story) {
+        <option [value]="story">{{ STORY_LABELS[story] }}</option>
       }
-    </div>
-
-    <div class="controls">
-      <div class="input-row">
-        <app-wheel-picker [options]="alphabet" (optionPicked)="onOptionPicked($event)"></app-wheel-picker>
-
-        <button (click)="guessLetter()" class="pencil-btn icon-btn" title="Buchstaben raten">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
-          </svg>
-        </button>
-      </div>
-
-      @if (game().phase === 'Won' || game().phase === 'Lost') {
-        <button (click)="startNewGame()" class="pencil-btn new-game-btn">
-          Neues Spiel
-        </button>
-      }
-    </div>
+    </select>
   </div>
 
+  <div class="illustration-wrapper">
+    <app-illustration [story]="selectedStory()" [drama]="drama()"></app-illustration>
+  </div>
 
+  <div class="word-display">
+    @for (char of game().guessedWord; track $index) {
+      <span class="char-box">{{ char !== '_' ? char : '' }}</span>
+    }
+  </div>
 
+  <div class="controls">
+    <div class="input-row">
+      <app-wheel-picker
+        [options]="alphabet"
+        (optionPicked)="onOptionPicked($event)"
+      ></app-wheel-picker>
+
+      <button (click)="guessLetter()" class="pencil-btn icon-btn" title="Buchstaben raten">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+      </button>
+    </div>
+
+    @if (game().phase === 'Won' || game().phase === 'Lost') {
+      <button (click)="startNewGame()" class="pencil-btn new-game-btn">Neues Spiel</button>
+    }
+  </div>
+</div>

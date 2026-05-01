@@ -5,17 +5,18 @@ import { GameActions } from './game.state';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 
 export const fetchRandomWordEffect = createEffect(
-  (actions$ = inject(Actions),
-   randomWordService = inject(RandomWordService)) => {
+  (actions$ = inject(Actions), randomWordService = inject(RandomWordService)) => {
     return actions$.pipe(
       ofType(GameActions.newGame),
       exhaustMap(() =>
         randomWordService.fetchWord().pipe(
-          map(word => GameActions.fetchWordSucceeded({word})),
-          catchError(error => of(GameActions.fetchWordFailed({error})))
-        )
-      )
-    )
-  }, {
-    functional: true
-  });
+          map((word) => GameActions.fetchWordSucceeded({ word })),
+          catchError((error) => of(GameActions.fetchWordFailed({ error }))),
+        ),
+      ),
+    );
+  },
+  {
+    functional: true,
+  },
+);

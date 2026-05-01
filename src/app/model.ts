@@ -20,7 +20,7 @@ export interface DramaIndicator {
 }
 
 export enum StoryEnum {
-  HANGMAN = 'Hangman', FLOWER = 'Flower', BOMB = 'Bomb'
+  HANGMAN = 'Hangman',
+  FLOWER = 'Flower',
+  BOMB = 'Bomb',
 }
-
-

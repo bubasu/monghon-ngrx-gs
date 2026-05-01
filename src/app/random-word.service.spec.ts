@@ -10,11 +10,7 @@ describe('RandomWordService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        RandomWordService,
-        provideHttpClient(),
-        provideHttpClientTesting()
-      ]
+      providers: [RandomWordService, provideHttpClient(), provideHttpClientTesting()],
     });
     service = TestBed.inject(RandomWordService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -29,8 +25,8 @@ describe('RandomWordService', () => {
   });
 
   it('should fetch random word', () => {
-    const mockWord= ['testword'];
-    service.fetchWord().subscribe(word => {
+    const mockWord = ['testword'];
+    service.fetchWord().subscribe((word) => {
       expect(word).toEqual(mockWord[0]);
     });
     const req = httpMock.expectOne('https://random-word-api.herokuapp.com/word?number=1');

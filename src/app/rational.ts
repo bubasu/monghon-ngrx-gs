@@ -1,5 +1,5 @@
 export class Rational {
-  readonly numerator: number;   // Zähler
+  readonly numerator: number; // Zähler
   readonly denominator: number; // Nenner
 
   constructor(numerator: number, denominator: number = 1) {
@@ -28,16 +28,13 @@ export class Rational {
   add(other: Rational): Rational {
     return new Rational(
       this.numerator * other.denominator + other.numerator * this.denominator,
-      this.denominator * other.denominator
+      this.denominator * other.denominator,
     );
   }
 
   // Multiplikation: (a/b) * (c/d) = (ac) / (bd)
   multiply(other: Rational): Rational {
-    return new Rational(
-      this.numerator * other.numerator,
-      this.denominator * other.denominator
-    );
+    return new Rational(this.numerator * other.numerator, this.denominator * other.denominator);
   }
 
   toString(): string {

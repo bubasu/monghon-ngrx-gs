@@ -8,9 +8,8 @@ describe('WheelPicker', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WheelPickerComponent]
-    })
-    .compileComponents();
+      imports: [WheelPickerComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(WheelPickerComponent);
     component = fixture.componentInstance;

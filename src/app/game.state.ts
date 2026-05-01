@@ -1,13 +1,20 @@
 import { Game } from './model';
-import { createActionGroup, createFeature, createReducer, emptyProps, on, props } from '@ngrx/store';
+import {
+  createActionGroup,
+  createFeature,
+  createReducer,
+  emptyProps,
+  on,
+  props,
+} from '@ngrx/store';
 
 export const GameActions = createActionGroup({
   source: 'Game',
   events: {
-    'newGame': emptyProps(),
-    'fetchWordSucceeded': props<{word: string}>(),
-    'fetchWordFailed': props<{error: string}>(),
-    'guessLetter': props<{letter: string}>(),
+    newGame: emptyProps(),
+    fetchWordSucceeded: props<{ word: string }>(),
+    fetchWordFailed: props<{ error: string }>(),
+    guessLetter: props<{ letter: string }>(),
   },
 });
 
@@ -17,14 +24,19 @@ export const initialGameState: Game = {
   guessedWord: '',
   cntIncorrectGuesses: 0,
   maxCntIncorrectGuesses: 11,
-}
+};
 
 export const gameReducer = createReducer(
   initialGameState,
-  on(GameActions.fetchWordSucceeded, (state, { word  }) =>
-    ({ ...state, phase: 'Playing', targetWord: word, guessedWord: '_'.repeat(word.length), cntIncorrectGuesses: 0 })),
+  on(GameActions.fetchWordSucceeded, (state, { word }) => ({
+    ...state,
+    phase: 'Playing',
+    targetWord: word,
+    guessedWord: '_'.repeat(word.length),
+    cntIncorrectGuesses: 0,
+  })),
   on(GameActions.guessLetter, (state, { letter }) => {
-    const guessedWordAsArray = [ ...state.guessedWord ];
+    const guessedWordAsArray = [...state.guessedWord];
     let foundLetter = false;
     for (let i = 0; i < state.targetWord.length; i++) {
       if (state.targetWord[i].toUpperCase() === letter.toUpperCase()) {
@@ -50,7 +62,5 @@ export const gameReducer = createReducer(
 
 export const gameFeature = createFeature({
   name: 'game',
-  reducer: gameReducer
+  reducer: gameReducer,
 });
-
-

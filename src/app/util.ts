@@ -8,13 +8,13 @@ export class Util {
   }
 
   static countGuessedChars(word: string): number {
-    return word.split('').filter(c => c !== '_').length;
+    return word.split('').filter((c) => c !== '_').length;
   }
 
   static deriveDrama(game: Game): DramaIndicator {
     return {
       danger: new Rational(game.cntIncorrectGuesses, game.maxCntIncorrectGuesses),
       defense: new Rational(Util.countGuessedChars(game.guessedWord), game.targetWord.length),
-    }
+    };
   }
 }

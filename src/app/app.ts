@@ -6,7 +6,7 @@ import { GameComponent } from './game/game.component';
   selector: 'app-root',
   imports: [GameComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('monghon-ngrx-gs');

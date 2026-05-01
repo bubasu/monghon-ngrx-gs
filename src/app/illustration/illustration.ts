@@ -33,13 +33,13 @@ export class Illustration {
     // Schritt 4: Ende (185, 95)
     // Schritt 10: Anfang (132, 108)
     const positions = [
-      { x: 185, y: 95 },  // Schritt 4
-      { x: 175, y: 98 },  // Schritt 5
+      { x: 185, y: 95 }, // Schritt 4
+      { x: 175, y: 98 }, // Schritt 5
       { x: 165, y: 100 }, // Schritt 6
-      { x: 155, y: 95 },  // Schritt 7
-      { x: 145, y: 92 },  // Schritt 8
+      { x: 155, y: 95 }, // Schritt 7
+      { x: 145, y: 92 }, // Schritt 8
       { x: 138, y: 100 }, // Schritt 9
-      { x: 132, y: 108 }  // Schritt 10
+      { x: 132, y: 108 }, // Schritt 10
     ];
 
     const pos = positions[steps - 4] || positions[0];

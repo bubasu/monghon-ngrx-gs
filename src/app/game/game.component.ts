@@ -17,12 +17,7 @@ const STORY_LABELS: Record<StoryEnum, string> = {
 
 @Component({
   selector: 'app-game',
-  imports: [
-    FormsModule,
-    WheelPickerComponent,
-    Illustration,
-    JsonPipe
-  ],
+  imports: [FormsModule, WheelPickerComponent, Illustration, JsonPipe],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
@@ -32,8 +27,7 @@ export class GameComponent implements OnInit {
   game = this.store.selectSignal(gameFeature.selectGameState);
   protected guessedLetter = signal('');
 
-  protected readonly alphabet = Array.from({ length: 26 }, (_, i) =>
-    String.fromCharCode(65 + i));
+  protected readonly alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
 
   protected allStories = Object.values(StoryEnum);
   protected selectedStory = signal(StoryEnum.HANGMAN);
@@ -57,9 +51,9 @@ export class GameComponent implements OnInit {
   }
 
   protected fetchRandomWord() {
-    this.randomWordService.fetchWord().subscribe(data => {
+    this.randomWordService.fetchWord().subscribe((data) => {
       console.log(data);
-    })
+    });
   }
 
   protected story() {

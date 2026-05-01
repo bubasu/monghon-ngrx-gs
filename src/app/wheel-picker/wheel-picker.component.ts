@@ -32,7 +32,7 @@ export class WheelPickerComponent {
     // Scrolle das Element sanft in die Mitte
     container.scrollTo({
       left: index * itemWidth,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 }
