@@ -11,7 +11,8 @@ import { StoryEnum } from '../model';
 
 const STORY_LABELS: Record<StoryEnum, string> = {
   [StoryEnum.HANGMAN]: 'Hangman',
-  [StoryEnum.TRAIN_ACCIDENT]: 'Train Accident',
+  [StoryEnum.FLOWER]: 'Flower',
+  [StoryEnum.BOMB]: 'Bomb',
 };
 
 @Component({

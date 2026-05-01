@@ -8,20 +8,112 @@
       <!-- Galgen -->
       @if (errorSteps() >= 2) { <line x1="50" y1="230" x2="50" y2="20" stroke="black" stroke-width="3"/> }
       @if (errorSteps() >= 3) { <line x1="50" y1="20" x2="150" y2="20" stroke="black" stroke-width="3"/> }
-      @if (errorSteps() >= 4) { <line x1="150" y1="20" x2="150" y2="50" stroke="black" stroke-width="3"/> }
+      @if (errorSteps() >= 4) { <line x1="50" y1="60" x2="90" y2="20" stroke="black" stroke-width="3"/> } <!-- Schräger Balken -->
+      @if (errorSteps() >= 5) { <line x1="150" y1="20" x2="150" y2="50" stroke="black" stroke-width="3"/> }
 
       <!-- Männchen -->
-      @if (errorSteps() >= 5) { <circle cx="150" cy="70" r="20" fill="none" stroke="black" stroke-width="3"/> } <!-- Kopf -->
-      @if (errorSteps() >= 6) { <line x1="150" y1="90" x2="150" y2="150" stroke="black" stroke-width="3"/> } <!-- Körper -->
-      @if (errorSteps() >= 7) { <line x1="150" y1="110" x2="120" y2="130" stroke="black" stroke-width="3"/> } <!-- Linker Arm -->
-      @if (errorSteps() >= 8) { <line x1="150" y1="110" x2="180" y2="130" stroke="black" stroke-width="3"/> } <!-- Rechter Arm -->
-      @if (errorSteps() >= 9) { <line x1="150" y1="150" x2="120" y2="190" stroke="black" stroke-width="3"/> } <!-- Linkes Bein -->
-      @if (errorSteps() >= 10) { <line x1="150" y1="150" x2="180" y2="190" stroke="black" stroke-width="3"/> } <!-- Rechtes Bein -->
+      @if (errorSteps() >= 6) { <circle cx="150" cy="70" r="20" fill="none" stroke="black" stroke-width="3"/> } <!-- Kopf -->
+      @if (errorSteps() >= 7) { <line x1="150" y1="90" x2="150" y2="150" stroke="black" stroke-width="3"/> } <!-- Körper -->
+      @if (errorSteps() >= 8) { <line x1="150" y1="110" x2="120" y2="130" stroke="black" stroke-width="3"/> } <!-- Linker Arm -->
+      @if (errorSteps() >= 9) { <line x1="150" y1="110" x2="180" y2="130" stroke="black" stroke-width="3"/> } <!-- Rechter Arm -->
+      @if (errorSteps() >= 10) { <line x1="150" y1="150" x2="120" y2="190" stroke="black" stroke-width="3"/> } <!-- Linkes Bein -->
+      @if (errorSteps() >= 11) { <line x1="150" y1="150" x2="180" y2="190" stroke="black" stroke-width="3"/> } <!-- Rechtes Bein -->
     </svg>
   }
 
-  @if (story() === StoryEnum.TRAIN_ACCIDENT) {
-     <!-- Hier könntest du ein SVG für den Zugunglück-Fortschritt einbauen -->
-     <p>Zug nähert sich der Klippe: {{ errorSteps() }}</p>
+  @if (story() === StoryEnum.FLOWER) {
+    <svg viewBox="0 0 200 250" class="flower-svg" width="200" height="250">
+      <!-- Boden (Verschwindet bei Fehler 11) -->
+      @if (errorSteps() <= 10) {
+        <rect x="20" y="220" width="160" height="10" fill="#8B4513" />
+      }
+
+      <!-- Stengel (Verschwindet bei Fehler 10) -->
+      @if (errorSteps() <= 9) {
+        <line x1="100" y1="220" x2="100" y2="100" stroke="green" stroke-width="4" />
+      }
+
+      <!-- Blatt 1 links (Verschwindet bei Fehler 9) -->
+      @if (errorSteps() <= 8) {
+        <ellipse cx="85" cy="180" rx="15" ry="8" fill="green" transform="rotate(-30 85 180)" />
+      }
+
+      <!-- Blatt 2 rechts (Verschwindet bei Fehler 8) -->
+      @if (errorSteps() <= 7) {
+        <ellipse cx="115" cy="160" rx="15" ry="8" fill="green" transform="rotate(30 115 160)" />
+      }
+
+      <!-- Blütenblätter 1-5 (Verschwinden nacheinander bei Fehlern 6 bis 10) -->
+      <!-- Blatt 1 (Oben) -->
+      @if (errorSteps() <= 5) {
+        <circle cx="100" cy="70" r="15" fill="#FFB6C1" />
+      }
+      <!-- Blatt 2 (Oben Rechts) -->
+      @if (errorSteps() <= 4) {
+        <circle cx="125" cy="85" r="15" fill="#FFB6C1" />
+      }
+      <!-- Blatt 3 (Unten Rechts) -->
+      @if (errorSteps() <= 3) {
+        <circle cx="115" cy="115" r="15" fill="#FFB6C1" />
+      }
+      <!-- Blatt 4 (Unten Links) -->
+      @if (errorSteps() <= 2) {
+        <circle cx="85" cy="115" r="15" fill="#FFB6C1" />
+      }
+      <!-- Blatt 5 (Oben Links) -->
+      @if (errorSteps() <= 1) {
+        <circle cx="75" cy="85" r="15" fill="#FFB6C1" />
+      }
+
+      <!-- Blütenmitte (Verschwindet bei Fehler 7) -->
+      @if (errorSteps() <= 6) {
+        <circle cx="100" cy="100" r="20" fill="yellow" stroke="orange" stroke-width="2" />
+      }
+
+      <!-- Biene (Verschwindet bei Fehler 1) -->
+      @if (errorSteps() <= 0) {
+        <g transform="translate(130, 40)">
+          <ellipse cx="0" cy="0" rx="10" ry="7" fill="yellow" stroke="black" />
+          <line x1="-3" y1="-7" x2="-3" y2="7" stroke="black" stroke-width="2" />
+          <line x1="3" y1="-7" x2="3" y2="7" stroke="black" stroke-width="2" />
+          <ellipse cx="-5" cy="-8" rx="6" ry="3" fill="lightblue" opacity="0.7" />
+          <ellipse cx="5" cy="-8" rx="6" ry="3" fill="lightblue" opacity="0.7" />
+        </g>
+      }
+    </svg>
+  }
+  @if (story() === StoryEnum.BOMB) {
+    <svg viewBox="0 0 200 250" class="bomb-svg" width="200" height="250">
+      <!-- 1. Bombe (Kreis) -->
+      @if (errorSteps() >= 1) {
+        <circle cx="100" cy="150" r="40" fill="black" />
+      }
+
+      <!-- 2. Halterung (Rechteck) -->
+      @if (errorSteps() >= 2) {
+        <rect x="120" y="115" width="15" height="15" fill="gray" transform="rotate(-30 120 115)" />
+      }
+
+      <!-- 3. Zündschnur (Sinus-Linie) -->
+      @if (errorSteps() >= 3) {
+        <path d="M 132 108 Q 145 90 160 100 T 185 95" stroke="brown" stroke-width="3" fill="none" />
+      }
+
+      <!-- 4-10. Brennender Stern wandert die Zündschnur entlang -->
+      <!-- Schritt 4: Am Ende der Zündschnur -->
+      @if (errorSteps() >= 4 && errorSteps() < 11) {
+        <g [attr.transform]="getStarTransform(errorSteps())">
+          <path d="M 0 -10 L 3 -3 L 10 -3 L 5 2 L 7 9 L 0 5 L -7 9 L -5 2 L -10 -3 L -3 -3 Z" fill="orange" stroke="red" />
+        </g>
+      }
+
+      <!-- 11. Explosion -->
+      @if (errorSteps() >= 11) {
+        <g transform="translate(100, 150)">
+          <path d="M -60 -60 L -20 -40 L 0 -80 L 20 -40 L 60 -60 L 40 -20 L 80 0 L 40 20 L 60 60 L 20 40 L 0 80 L -20 40 L -60 60 L -40 20 L -80 0 L -40 -20 Z" fill="yellow" stroke="red" stroke-width="4" />
+          <circle cx="0" cy="0" r="20" fill="orange" />
+        </g>
+      }
+    </svg>
   }
 </div>
