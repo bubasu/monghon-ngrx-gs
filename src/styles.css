@@ -1,3 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+:root {
+  --paper-bg: #fdfaf0;
+  --pencil-color: #333;
+  --accent-color: #555;
+}
+
+body {
+  background-color: #e5e5e5;
+  margin: 0;
+  padding: 0;
+  font-family: 'Indie Flower', cursive;
+  color: var(--pencil-color);
+}
+
+.paper-texture {
+  background-color: var(--paper-bg);
+  background-image:
+    linear-gradient(90deg, rgba(200,0,0,0.05) 0%, rgba(200,0,0,0.05) 1px, transparent 1px, transparent 100%),
+    linear-gradient(rgba(0,0,255,0.05) 0%, rgba(0,0,255,0.05) 1px, transparent 1px, transparent 100%);
+  background-size: 20px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.pencil-border {
+  border: 2px solid var(--pencil-color);
+  border-radius: 4px;
+  position: relative;
+}
+
+.pencil-border-subtle {
+  border: 1px solid var(--pencil-color);
+  border-radius: 4px;
+  opacity: 0.8;
+}
+
+/* Sketched effect for borders */
+.pencil-border::after {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  border: 1px solid var(--pencil-color);
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+button {
+  font-family: 'Architects Daughter', cursive;
+}

@@ -1,50 +1,41 @@
-  <!-- <div>{{ game().guessedWord }}</div> -->
+  <div class="game-container paper-texture pencil-border">
+    <div class="story-selector">
+      <label for="storySelect">Szenario:</label>
+      <select id="storySelect" [(ngModel)]="selectedStory">
+        @for (story of allStories; track story) {
+          <option [value]="story">{{ STORY_LABELS[story] }}</option>
+        }
+      </select>
+    </div>
 
-  <label for="storySelect">Story:</label>
-  <select id="storySelect" [(ngModel)]="selectedStory">
-  @for (story of allStories; track story) {
-    <option [value]="story">{{ STORY_LABELS[story] }}</option>
-  }
-  </select>
+    <div class="illustration-wrapper">
+      <app-illustration [story]="selectedStory()" [drama]="drama()"></app-illustration>
+    </div>
 
-  <app-illustration [story]="selectedStory()" [drama]="drama()"></app-illustration>
+    <div class="word-display">
+      @for (char of game().guessedWord; track $index) {
+        <span class="char-box">{{ char !== '_' ? char : '' }}</span>
+      }
+    </div>
 
-  @for (char of game().guessedWord; track $index) {
-    <span class="text-4lg p-1">{{ char }}</span>
-  }
+    <div class="controls">
+      <div class="input-row">
+        <app-wheel-picker [options]="alphabet" (optionPicked)="onOptionPicked($event)"></app-wheel-picker>
 
-  <!--
-  <input type="text" [(ngModel)]="guessedLetter" [maxLength]="1"
-         class="shadow uppercase appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-  -->
+        <button (click)="guessLetter()" class="pencil-btn icon-btn" title="Buchstaben raten">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+          </svg>
+        </button>
+      </div>
 
-  <div class="flex">
-    <app-wheel-picker [options]="alphabet" (optionPicked)="onOptionPicked($event)"></app-wheel-picker>
-    <button (click)="guessLetter()"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-           class="size-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
-      </svg>
-    </button>
-
-    <!--<button (click)="fetchRandomWord()">Test Random Word Fetch</button>-->
+      @if (game().phase === 'Won' || game().phase === 'Lost') {
+        <button (click)="startNewGame()" class="pencil-btn new-game-btn">
+          Neues Spiel
+        </button>
+      }
+    </div>
   </div>
-
-  <!--
-  <div>
-    {{ game() | json }}
-  </div>
-  <div>
-    {{ drama() | json }}
-  </div>
-  -->
-
-  @if (game().phase === 'Won' || game().phase === 'Lost') {
-    <button (click)="startNewGame()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      New Game
-    </button>
-  }
 
 
 

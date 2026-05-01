@@ -1,0 +1,121 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.story-selector {
+  align-self: flex-start;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.story-selector select {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--pencil-color);
+  outline: none;
+  cursor: pointer;
+  padding: 2px 5px;
+}
+
+.illustration-wrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+app-illustration {
+  /* Vergrößert die Illustration */
+  scale: 1.2;
+}
+
+.word-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.char-box {
+  font-size: 2.5rem;
+  min-width: 2rem;
+  text-align: center;
+  border-bottom: 3px solid var(--pencil-color);
+  line-height: 1;
+}
+
+.controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pencil-btn {
+  background: transparent;
+  border: 2px solid var(--pencil-color);
+  padding: 0.5rem 1rem;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; /* Handdrawn look */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.pencil-btn:hover {
+  transform: rotate(-1deg) scale(1.05);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+}
+
+.pencil-btn:active {
+  transform: scale(0.95);
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.new-game-btn {
+  margin-top: 1rem;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+@media (max-width: 480px) {
+  .char-box {
+    font-size: 2rem;
+  }
+
+  app-illustration {
+    transform: scale(1.1);
+  }
+}
