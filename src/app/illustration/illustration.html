@@ -1,25 +1,40 @@
+<svg style="position: absolute; width: 0; height: 0;">
+  <filter id="pencilTexture" x="-50" y="-50" width="300" height="350" filterUnits="userSpaceOnUse">
+    <!-- Erzeugt ein feines Rauschen -->
+    <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" result="noise" />
+    <!-- Verdrängt die Linien basierend auf dem Rauschen -->
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="noise"
+      scale="2"
+      xChannelSelector="R"
+      yChannelSelector="G"
+    />
+  </filter>
+</svg>
+
 <!-- src/app/illustration/illustration.html -->
 <div class="illustration-container">
   @if (story() === StoryEnum.HANGMAN) {
     <svg viewBox="0 0 200 250" class="hangman-svg" width="200" height="250">
       <!-- Boden (immer sichtbar ab 1. Fehler oder als Basis) -->
       @if (errorSteps() >= 1) {
-        <line x1="20" y1="230" x2="180" y2="230" stroke="black" stroke-width="3" />
+        <line x1="20" y1="230" x2="180" y2="230.01" stroke="black" stroke-width="3" />
       }
 
       <!-- Galgen -->
       @if (errorSteps() >= 2) {
-        <line x1="50" y1="230" x2="50" y2="20" stroke="black" stroke-width="3" />
+        <line x1="50" y1="230" x2="50.01" y2="20" stroke="black" stroke-width="3" />
       }
       @if (errorSteps() >= 3) {
-        <line x1="50" y1="20" x2="150" y2="20" stroke="black" stroke-width="3" />
+        <line x1="50" y1="20" x2="150" y2="20.01" stroke="black" stroke-width="3" />
       }
       @if (errorSteps() >= 4) {
         <line x1="50" y1="60" x2="90" y2="20" stroke="black" stroke-width="3" />
       }
       <!-- Schräger Balken -->
       @if (errorSteps() >= 5) {
-        <line x1="150" y1="20" x2="150" y2="50" stroke="black" stroke-width="3" />
+        <line x1="150" y1="20" x2="150.01" y2="50" stroke="black" stroke-width="3" />
       }
 
       <!-- Männchen -->
@@ -28,7 +43,7 @@
       }
       <!-- Kopf -->
       @if (errorSteps() >= 7) {
-        <line x1="150" y1="90" x2="150" y2="150" stroke="black" stroke-width="3" />
+        <line x1="150" y1="90" x2="150.01" y2="150" stroke="black" stroke-width="3" />
       }
       <!-- Körper -->
       @if (errorSteps() >= 8) {
@@ -59,7 +74,7 @@
 
       <!-- Stengel (Verschwindet bei Fehler 10) -->
       @if (errorSteps() <= 9) {
-        <line x1="100" y1="220" x2="100" y2="100" stroke="green" stroke-width="4" />
+        <line x1="100" y1="220" x2="100.01" y2="100" stroke="green" stroke-width="4" />
       }
 
       <!-- Blatt 1 links (Verschwindet bei Fehler 9) -->
