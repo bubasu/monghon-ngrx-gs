@@ -16,7 +16,7 @@ export const initialGameState: Game = {
   targetWord: '',
   guessedWord: '',
   cntIncorrectGuesses: 0,
-  maxCntIncorrectGuesses: 10,
+  maxCntIncorrectGuesses: 11,
 }
 
 export const gameReducer = createReducer(

@@ -5,7 +5,15 @@
 } @else {
   <!-- <div>{{ game().guessedWord }}</div> -->
 
-  @for (char of game().guessedWord; track char) {
+  <select [(ngModel)]="selectedStory">
+  @for (story of allStories; track story) {
+    <option [value]="story">{{ STORY_LABELS[story] }}</option>
+  }
+  </select>
+
+  <app-illustration [story]="selectedStory()" [drama]="drama()"></app-illustration>
+
+  @for (char of game().guessedWord; track $index) {
     <span class="text-4lg p-1">{{ char }}</span>
   }
 
@@ -24,7 +32,14 @@
       </svg>
     </button>
 
-    <button (click)="fetchRandomWord()">Test Random Word Fetch</button>
+    <!--<button (click)="fetchRandomWord()">Test Random Word Fetch</button>-->
+  </div>
+
+  <div>
+    {{ game() | json }}
+  </div>
+  <div>
+    {{ drama() | json }}
   </div>
 }
 

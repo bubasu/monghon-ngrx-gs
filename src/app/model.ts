@@ -1,3 +1,5 @@
+import { Rational } from './rational';
+
 export type GamePhase = 'Initial' | 'Playing' | 'Won' | 'Lost';
 
 export interface Game {
@@ -12,11 +14,13 @@ export interface GameContext {
   game: Game;
 }
 
-export class GameUtil {
-  static percentGood(game: Game): number {
-    // Anzahl der richtigen Buchstaben im Vergleich zur Länge vom
-    return 0;
-  }
+export interface DramaIndicator {
+  danger: Rational;
+  defense: Rational;
+}
+
+export enum StoryEnum {
+  HANGMAN = 'Hangman', TRAIN_ACCIDENT = 'Train Accident',
 }
 
 
