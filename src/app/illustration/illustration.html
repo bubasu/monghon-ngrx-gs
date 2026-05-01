@@ -1,1 +1,27 @@
-<p>illustration works!</p>
+<!-- src/app/illustration/illustration.html -->
+<div class="illustration-container">
+  @if (story() === StoryEnum.HANGMAN) {
+    <svg viewBox="0 0 200 250" class="hangman-svg" width="200" height="250">
+      <!-- Boden (immer sichtbar ab 1. Fehler oder als Basis) -->
+      @if (errorSteps() >= 1) { <line x1="20" y1="230" x2="180" y2="230" stroke="black" stroke-width="3"/> }
+
+      <!-- Galgen -->
+      @if (errorSteps() >= 2) { <line x1="50" y1="230" x2="50" y2="20" stroke="black" stroke-width="3"/> }
+      @if (errorSteps() >= 3) { <line x1="50" y1="20" x2="150" y2="20" stroke="black" stroke-width="3"/> }
+      @if (errorSteps() >= 4) { <line x1="150" y1="20" x2="150" y2="50" stroke="black" stroke-width="3"/> }
+
+      <!-- Männchen -->
+      @if (errorSteps() >= 5) { <circle cx="150" cy="70" r="20" fill="none" stroke="black" stroke-width="3"/> } <!-- Kopf -->
+      @if (errorSteps() >= 6) { <line x1="150" y1="90" x2="150" y2="150" stroke="black" stroke-width="3"/> } <!-- Körper -->
+      @if (errorSteps() >= 7) { <line x1="150" y1="110" x2="120" y2="130" stroke="black" stroke-width="3"/> } <!-- Linker Arm -->
+      @if (errorSteps() >= 8) { <line x1="150" y1="110" x2="180" y2="130" stroke="black" stroke-width="3"/> } <!-- Rechter Arm -->
+      @if (errorSteps() >= 9) { <line x1="150" y1="150" x2="120" y2="190" stroke="black" stroke-width="3"/> } <!-- Linkes Bein -->
+      @if (errorSteps() >= 10) { <line x1="150" y1="150" x2="180" y2="190" stroke="black" stroke-width="3"/> } <!-- Rechtes Bein -->
+    </svg>
+  }
+
+  @if (story() === StoryEnum.TRAIN_ACCIDENT) {
+     <!-- Hier könntest du ein SVG für den Zugunglück-Fortschritt einbauen -->
+     <p>Zug nähert sich der Klippe: {{ errorSteps() }}</p>
+  }
+</div>
