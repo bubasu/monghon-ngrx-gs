@@ -1,11 +1,7 @@
-@if (game().phase === 'Initial') {
-  <button (click)="startNewGame()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    New Game
-  </button>
-} @else {
   <!-- <div>{{ game().guessedWord }}</div> -->
 
-  <select [(ngModel)]="selectedStory">
+  <label for="storySelect">Story:</label>
+  <select id="storySelect" [(ngModel)]="selectedStory">
   @for (story of allStories; track story) {
     <option [value]="story">{{ STORY_LABELS[story] }}</option>
   }
@@ -35,14 +31,20 @@
     <!--<button (click)="fetchRandomWord()">Test Random Word Fetch</button>-->
   </div>
 
+  <!--
   <div>
     {{ game() | json }}
   </div>
   <div>
     {{ drama() | json }}
   </div>
-}
+  -->
 
+  @if (game().phase === 'Won' || game().phase === 'Lost') {
+    <button (click)="startNewGame()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      New Game
+    </button>
+  }
 
 
 

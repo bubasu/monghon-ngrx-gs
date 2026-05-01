@@ -22,7 +22,7 @@ export const initialGameState: Game = {
 export const gameReducer = createReducer(
   initialGameState,
   on(GameActions.fetchWordSucceeded, (state, { word  }) =>
-    ({ ...state, phase: 'Playing', targetWord: word, guessedWord: '_'.repeat(word.length) })),
+    ({ ...state, phase: 'Playing', targetWord: word, guessedWord: '_'.repeat(word.length), cntIncorrectGuesses: 0 })),
   on(GameActions.guessLetter, (state, { letter }) => {
     const guessedWordAsArray = [ ...state.guessedWord ];
     let foundLetter = false;

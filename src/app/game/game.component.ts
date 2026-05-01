@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GameActions, gameFeature } from '../game.state';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +26,7 @@ const STORY_LABELS: Record<StoryEnum, string> = {
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
   private readonly store = inject(Store);
   private randomWordService = inject(RandomWordService);
   game = this.store.selectSignal(gameFeature.selectGameState);
@@ -38,6 +38,10 @@ export class GameComponent {
   protected allStories = Object.values(StoryEnum);
   protected selectedStory = signal(StoryEnum.HANGMAN);
   protected STORY_LABELS = STORY_LABELS;
+
+  ngOnInit(): void {
+    this.startNewGame();
+  }
 
   startNewGame() {
     this.store.dispatch(GameActions.newGame());
