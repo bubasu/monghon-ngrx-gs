@@ -6,10 +6,26 @@ svg {
   filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
 }
 
-svg line, svg circle, svg path, svg ellipse, svg rect {
+svg line,
+svg circle,
+svg path,
+svg ellipse,
+svg rect {
   stroke-linecap: round;
   stroke-linejoin: round;
-  /* Optional: Leichte Wellenbewegung oder Unregelmäßigkeit via CSS Animation oder einfach statisch */
+  /* Wendet den in illustration.html definierten Filter an */
+  filter: url(#pencilTexture);
+
+  /* Optional: Macht die Linien etwas "weicher" wie Graphit */
+  stroke-opacity: 0.9;
+}
+
+/* Speziell für die Blume oder bunte Elemente */
+.flower-svg circle,
+.flower-svg ellipse {
+  /* Ein leichter "Mal-Effekt" durch eine feine gestrichelte Linie am Rand */
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
 }
 
 .hangman-svg line, .hangman-svg circle {
