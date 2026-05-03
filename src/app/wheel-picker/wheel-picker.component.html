@@ -1,13 +1,13 @@
-<!-- Der Picker Container -->
+<!-- The picker container -->
 <div
   class="relative flex items-center w-48 h-12 bg-transparent rounded-lg overflow-hidden border-2 border-pencil-color pencil-border-subtle"
 >
-  <!-- Markierung in der Mitte -->
+  <!-- Marker in the center -->
   <div class="absolute inset-0 flex justify-center pointer-events-none">
     <div class="w-10 h-full border-l border-r border-gray-300 opacity-50"></div>
   </div>
 
-  <!-- Scrollbarer Bereich -->
+  <!-- Scrollable area -->
   <div
     #scrollContainer
     (scroll)="onScroll($event)"

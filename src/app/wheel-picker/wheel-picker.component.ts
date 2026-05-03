@@ -16,7 +16,7 @@ export class WheelPickerComponent {
   onScroll(event: Event) {
     const element = event.target as HTMLElement;
     const scrollLeft = element.scrollLeft;
-    const itemWidth = 40; // Die Breite von w-10
+    const itemWidth = 40; // The width of w-10
     const index = Math.round(scrollLeft / itemWidth);
     const picked = this.options()[index];
     if (picked && picked !== this.pick()) {
@@ -26,10 +26,10 @@ export class WheelPickerComponent {
   }
 
   scrollToOption(index: number) {
-    const itemWidth = 40; // Gleicher Wert wie in onScroll
+    const itemWidth = 40; // Same value as in onScroll
     const container = this.scrollContainer.nativeElement;
 
-    // Scrolle das Element sanft in die Mitte
+    // Smoothly scroll the element to the center
     container.scrollTo({
       left: index * itemWidth,
       behavior: 'smooth',

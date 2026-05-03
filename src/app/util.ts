@@ -3,7 +3,7 @@ import { Rational } from './rational';
 
 export class Util {
   static percentGood(game: Game): number {
-    // Anzahl der richtigen Buchstaben im Vergleich zur Länge vom
+    // Number of correct letters compared to the length of the
     return 0;
   }
 
