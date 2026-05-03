@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GameActions, gameFeature } from '../game.state';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +6,7 @@ import { WheelPickerComponent } from '../wheel-picker/wheel-picker.component';
 import { Illustration } from '../illustration/illustration';
 import { Util } from '../util';
 import { Scenario } from '../model';
+import { NarratorService } from '../narrator.service';
 
 const SCENARIO_LABELS: Record<Scenario, string> = {
   [Scenario.HANGMAN]: 'Hangman',
@@ -22,6 +23,7 @@ const SCENARIO_LABELS: Record<Scenario, string> = {
 })
 export class GameComponent implements OnInit, AfterViewInit {
   private readonly store = inject(Store);
+  private readonly narrator = inject(NarratorService);
   @ViewChild(WheelPickerComponent) private wheelPicker?: WheelPickerComponent;
   @ViewChild('guessLetterBtn') private guessLetterBtn?: ElementRef<HTMLButtonElement>;
   @ViewChild('gameContainer') private gameContainer?: ElementRef<HTMLElement>;
@@ -36,6 +38,50 @@ export class GameComponent implements OnInit, AfterViewInit {
   protected selectedScenario = signal(Scenario.HANGMAN);
   protected SCENARIO_LABELS = SCENARIO_LABELS;
 
+  private readonly pendingNarrationLetter = signal<string | null>(null);
+  private readonly previousGuessedWord = signal('');
+  private readonly previousCntIncorrectGuesses = signal(0);
+  private readonly hasNarrationBaseline = signal(false);
+
+  constructor() {
+    effect(
+      () => {
+        const state = this.game();
+        const pendingLetter = this.pendingNarrationLetter();
+        const guessedWord = state.guessedWord;
+        const cntIncorrectGuesses = state.cntIncorrectGuesses;
+
+        if (!this.hasNarrationBaseline()) {
+          this.previousGuessedWord.set(guessedWord);
+          this.previousCntIncorrectGuesses.set(cntIncorrectGuesses);
+          this.hasNarrationBaseline.set(true);
+          return;
+        }
+
+        const previousWord = this.previousGuessedWord();
+        const previousCntBad = this.previousCntIncorrectGuesses();
+        const hasRelevantGameChange = guessedWord !== previousWord || cntIncorrectGuesses !== previousCntBad;
+
+        if (pendingLetter && hasRelevantGameChange) {
+          this.narrator.announceGuess({
+            letter: pendingLetter,
+            hit: guessedWord !== previousWord,
+            phase: state.phase,
+            dynamic: Util.deriveDynamic(state),
+            scenario: this.selectedScenario(),
+          });
+          this.pendingNarrationLetter.set(null);
+        }
+
+        if (hasRelevantGameChange || pendingLetter) {
+          this.previousGuessedWord.set(guessedWord);
+          this.previousCntIncorrectGuesses.set(cntIncorrectGuesses);
+        }
+      },
+      { allowSignalWrites: true },
+    );
+  }
+
   ngOnInit(): void {
     this.startNewGame();
   }
@@ -45,12 +91,32 @@ export class GameComponent implements OnInit, AfterViewInit {
   }
 
   startNewGame() {
+    this.pendingNarrationLetter.set(null);
     this.store.dispatch(GameActions.newGame());
     queueMicrotask(() => this.focusGameContainer());
   }
 
   guessLetter() {
-    this.store.dispatch(GameActions.guessLetter({ letter: this.letter() }));
+    const letter = this.letter().toUpperCase();
+    if (!letter) {
+      return;
+    }
+
+    const state = this.game();
+    if (state.phase !== 'Playing') {
+      return;
+    }
+
+    const normalizedTargetWord = state.targetWord.toUpperCase();
+    const isHit = normalizedTargetWord.includes(letter);
+    const isAlreadyRevealed = state.guessedWord.includes(letter);
+
+    if (isHit && isAlreadyRevealed) {
+      return;
+    }
+
+    this.pendingNarrationLetter.set(letter);
+    this.store.dispatch(GameActions.guessLetter({ letter }));
   }
 
   setLetter(letter: string) {
