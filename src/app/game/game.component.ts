@@ -11,6 +11,7 @@ const SCENARIO_LABELS: Record<Scenario, string> = {
   [Scenario.HANGMAN]: 'Hangman',
   [Scenario.FLOWER]: 'Flower',
   [Scenario.BOMB]: 'Bomb',
+  [Scenario.HAIR]: 'Hair',
 };
 
 @Component({

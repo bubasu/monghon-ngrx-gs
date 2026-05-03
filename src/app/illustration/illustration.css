@@ -31,3 +31,40 @@ svg rect {
 .hangman-svg line, .hangman-svg circle {
   stroke: var(--pencil-color, #333);
 }
+
+.hair-svg {
+  overflow: visible;
+}
+
+.hair-strand {
+  fill: none;
+  stroke: var(--hair-color, #222);
+  stroke-width: 3;
+}
+
+.hair-mouth {
+  transition: d 260ms ease;
+}
+
+.hair-eye {
+  transition: d 260ms ease;
+}
+
+.hair-fall {
+  transform-box: fill-box;
+  transform-origin: 0px 0px;
+  animation-name: hairDrop;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hairDrop {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--fall-x, 24px), var(--fall-y, 130px)) rotate(var(--fall-rotate, 210deg));
+  }
+}

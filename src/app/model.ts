@@ -19,4 +19,5 @@ export enum Scenario {
   HANGMAN = 'Hangman',
   FLOWER = 'Flower',
   BOMB = 'Bomb',
+  HAIR = 'Hair',
 }

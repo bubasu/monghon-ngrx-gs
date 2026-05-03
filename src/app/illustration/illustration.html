@@ -169,4 +169,40 @@
       }
     </svg>
   }
+  @if (scenario() === Scenario.HAIR) {
+    <svg viewBox="0 0 200 250" class="hair-svg" width="200" height="250">
+      <line x1="20" y1="218" x2="180" y2="218" stroke="black" stroke-width="3" />
+
+      <circle cx="100" cy="122" r="46" fill="#f8e8d2" stroke="#333" stroke-width="2.5" />
+
+      <path class="hair-eye" [attr.d]="eyePath('left')" stroke="#222" stroke-width="3" fill="none" />
+      <path class="hair-eye" [attr.d]="eyePath('right')" stroke="#222" stroke-width="3" fill="none" />
+
+      <path class="hair-mouth" [attr.d]="mouthPath()" stroke="#222" stroke-width="3.5" fill="none" />
+
+      @for (slot of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; track slot) {
+        @if (isHairVisible(slot)) {
+          <g [attr.transform]="hairTransform(slot)">
+            <path class="hair-strand" [attr.d]="hairPath(slot)" [style.--hair-color]="hairColor(slot)" />
+          </g>
+        }
+
+        @if (isHairFalling(slot)) {
+          <g
+            class="hair-fall"
+            [style]="fallingHairStyle(slot)"
+            [attr.transform]="hairTransform(slot)"
+          >
+            <path class="hair-strand" [attr.d]="hairPath(slot)" [style.--hair-color]="hairColor(slot)" />
+          </g>
+        }
+
+        @if (isHairOnGround(slot)) {
+          <g [attr.transform]="groundHairTransform(slot)">
+            <path class="hair-strand" [attr.d]="groundHairPath(slot)" [style.--hair-color]="hairColor(slot)" />
+          </g>
+        }
+      }
+    </svg>
+  }
 </div>
