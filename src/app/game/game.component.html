@@ -1,4 +1,10 @@
-<div class="game-container paper-texture pencil-border">
+<div
+  class="game-container paper-texture pencil-border"
+  tabindex="0"
+  role="region"
+  aria-label="Spielbereich"
+  (keydown)="onGameKeydown($event)"
+>
   <div class="story-selector">
     <label for="storySelect">Scenario:</label>
     <select id="storySelect" [(ngModel)]="selectedScenario">
@@ -26,7 +32,13 @@
         (optionPicked)="setLetter($event)"
       ></app-wheel-picker>
 
-      <button (click)="guessLetter()" class="pencil-btn icon-btn" title="Buchstaben raten">
+      <button
+        #guessLetterBtn
+        id="guessLetterBtn"
+        (click)="guessLetter()"
+        class="pencil-btn icon-btn"
+        title="Buchstaben raten"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

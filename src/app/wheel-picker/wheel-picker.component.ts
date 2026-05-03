@@ -100,6 +100,22 @@ export class WheelPickerComponent implements AfterViewInit {
     this.scrollToOption(realIndex);
   }
 
+  selectByValue(value: string): boolean {
+    const opts = this.options();
+    const index = opts.indexOf(value);
+    if (index < 0) {
+      return false;
+    }
+
+    if (value !== this.pick()) {
+      this.pick.set(value);
+      this.optionPicked.emit(value);
+    }
+
+    this.scrollToOption(index);
+    return true;
+  }
+
   scrollToOption(index: number) {
     const container = this.scrollContainer.nativeElement;
 

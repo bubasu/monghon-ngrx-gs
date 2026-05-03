@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GameActions, gameFeature } from '../game.state';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,9 @@ const SCENARIO_LABELS: Record<Scenario, string> = {
 })
 export class GameComponent implements OnInit {
   private readonly store = inject(Store);
+  @ViewChild(WheelPickerComponent) private wheelPicker?: WheelPickerComponent;
+  @ViewChild('guessLetterBtn') private guessLetterBtn?: ElementRef<HTMLButtonElement>;
+
   game = this.store.selectSignal(gameFeature.selectGameState);
   protected letter = signal('');
 
@@ -47,7 +50,49 @@ export class GameComponent implements OnInit {
     this.letter.set(letter);
   }
 
+  protected onGameKeydown(event: KeyboardEvent) {
+    if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) {
+      return;
+    }
+
+    const target = event.target as HTMLElement | null;
+    if (target) {
+      const tag = target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON' || target.isContentEditable) {
+        return;
+      }
+    }
+
+    if (event.key === 'Enter') {
+      if (this.letter()) {
+        event.preventDefault();
+        this.triggerGuessButtonPress();
+      }
+      return;
+    }
+
+    if (/^[a-zA-Z]$/.test(event.key)) {
+      const letter = event.key.toUpperCase();
+      if (this.wheelPicker?.selectByValue(letter)) {
+        this.setLetter(letter);
+        event.preventDefault();
+      }
+    }
+  }
+
   protected dynamic() {
     return Util.deriveDynamic(this.game());
+  }
+
+  private triggerGuessButtonPress() {
+    const button = this.guessLetterBtn?.nativeElement;
+    if (!button) {
+      this.guessLetter();
+      return;
+    }
+
+    button.classList.add('is-pressed');
+    button.click();
+    window.setTimeout(() => button.classList.remove('is-pressed'), 120);
   }
 }
