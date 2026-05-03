@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GameActions, gameFeature } from '../game.state';
 import { FormsModule } from '@angular/forms';
@@ -20,10 +20,12 @@ const SCENARIO_LABELS: Record<Scenario, string> = {
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, AfterViewInit {
   private readonly store = inject(Store);
   @ViewChild(WheelPickerComponent) private wheelPicker?: WheelPickerComponent;
   @ViewChild('guessLetterBtn') private guessLetterBtn?: ElementRef<HTMLButtonElement>;
+  @ViewChild('gameContainer') private gameContainer?: ElementRef<HTMLElement>;
+  @ViewChild('scenarioSelect') private scenarioSelect?: ElementRef<HTMLSelectElement>;
 
   game = this.store.selectSignal(gameFeature.selectGameState);
   protected letter = signal('');
@@ -38,8 +40,13 @@ export class GameComponent implements OnInit {
     this.startNewGame();
   }
 
+  ngAfterViewInit(): void {
+    queueMicrotask(() => this.focusGameContainer());
+  }
+
   startNewGame() {
     this.store.dispatch(GameActions.newGame());
+    queueMicrotask(() => this.focusGameContainer());
   }
 
   guessLetter() {
@@ -51,6 +58,11 @@ export class GameComponent implements OnInit {
   }
 
   protected onGameKeydown(event: KeyboardEvent) {
+    if (event.key === 'Tab' && !event.ctrlKey && !event.metaKey && !event.altKey) {
+      this.handleTabWrapping(event);
+      return;
+    }
+
     if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) {
       return;
     }
@@ -94,5 +106,51 @@ export class GameComponent implements OnInit {
     button.classList.add('is-pressed');
     button.click();
     window.setTimeout(() => button.classList.remove('is-pressed'), 120);
+  }
+
+  private focusGameContainer() {
+    this.gameContainer?.nativeElement.focus();
+  }
+
+  private handleTabWrapping(event: KeyboardEvent) {
+    const activeElement = document.activeElement;
+    const select = this.scenarioSelect?.nativeElement;
+    const guessButton = this.guessLetterBtn?.nativeElement;
+    const wheelIsFocused = this.wheelPicker?.isPickerFocused(activeElement) ?? false;
+
+    if (!event.shiftKey && activeElement === guessButton) {
+      event.preventDefault();
+      select?.focus();
+      return;
+    }
+
+    if (event.shiftKey && activeElement === select) {
+      event.preventDefault();
+      guessButton?.focus();
+      return;
+    }
+
+    if (!event.shiftKey && activeElement === select) {
+      event.preventDefault();
+      this.wheelPicker?.focusPicker();
+      return;
+    }
+
+    if (event.shiftKey && wheelIsFocused) {
+      event.preventDefault();
+      select?.focus();
+      return;
+    }
+
+    if (!event.shiftKey && wheelIsFocused) {
+      event.preventDefault();
+      guessButton?.focus();
+      return;
+    }
+
+    if (event.shiftKey && activeElement === guessButton) {
+      event.preventDefault();
+      this.wheelPicker?.focusPicker();
+    }
   }
 }

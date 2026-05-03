@@ -116,6 +116,14 @@ export class WheelPickerComponent implements AfterViewInit {
     return true;
   }
 
+  focusPicker() {
+    this.scrollContainer?.nativeElement.focus();
+  }
+
+  isPickerFocused(activeElement: Element | null): boolean {
+    return this.scrollContainer?.nativeElement === activeElement;
+  }
+
   scrollToOption(index: number) {
     const container = this.scrollContainer.nativeElement;
 

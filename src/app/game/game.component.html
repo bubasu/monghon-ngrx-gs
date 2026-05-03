@@ -1,13 +1,14 @@
 <div
+  #gameContainer
   class="game-container paper-texture pencil-border"
   tabindex="0"
   role="region"
   aria-label="Spielbereich"
   (keydown)="onGameKeydown($event)"
 >
-  <div class="story-selector">
-    <label for="storySelect">Scenario:</label>
-    <select id="storySelect" [(ngModel)]="selectedScenario">
+  <div class="scenario-selector">
+    <label for="scenarioSelect">Scenario:</label>
+    <select #scenarioSelect id="scenarioSelect" [(ngModel)]="selectedScenario">
       @for (scenario of allScenarios; track scenario) {
         <option [value]="scenario">{{ SCENARIO_LABELS[scenario] }}</option>
       }
