@@ -1,15 +1,15 @@
 <div class="game-container paper-texture pencil-border">
   <div class="story-selector">
-    <label for="storySelect">Szenario:</label>
-    <select id="storySelect" [(ngModel)]="selectedStory">
-      @for (story of allStories; track story) {
-        <option [value]="story">{{ STORY_LABELS[story] }}</option>
+    <label for="storySelect">Scenario:</label>
+    <select id="storySelect" [(ngModel)]="selectedScenario">
+      @for (scenario of allScenarios; track scenario) {
+        <option [value]="scenario">{{ SCENARIO_LABELS[scenario] }}</option>
       }
     </select>
   </div>
 
   <div class="illustration-wrapper">
-    <app-illustration [story]="selectedStory()" [drama]="drama()"></app-illustration>
+    <app-illustration [scenario]="selectedScenario()" [dynamic]="dynamic()"></app-illustration>
   </div>
 
   <div class="word-display">
@@ -22,7 +22,7 @@
     <div class="input-row">
       <app-wheel-picker
         [options]="alphabet"
-        (optionPicked)="onOptionPicked($event)"
+        (optionPicked)="setLetter($event)"
       ></app-wheel-picker>
 
       <button (click)="guessLetter()" class="pencil-btn icon-btn" title="Buchstaben raten">
@@ -40,7 +40,7 @@
     </div>
 
     @if (game().phase === 'Won' || game().phase === 'Lost') {
-      <button (click)="startNewGame()" class="pencil-btn new-game-btn">Neues Spiel</button>
+      <button (click)="startNewGame()" class="pencil-btn new-game-btn">New Game</button>
     }
   </div>
 </div>

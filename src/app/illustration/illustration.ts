@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { DramaIndicator, StoryEnum } from '../model';
+import { Dynamic, Scenario } from '../model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,21 +10,17 @@ import { CommonModule } from '@angular/common';
   styleUrl: './illustration.css',
 })
 export class Illustration {
-  story = input<StoryEnum>();
-  drama = input<DramaIndicator>();
+  scenario = input<Scenario>();
+  dynamic = input<Dynamic>();
 
   // Make the enum accessible in the template
-  protected readonly StoryEnum = StoryEnum;
+  protected readonly Scenario = Scenario;
 
-  // Calculates how many "error parts" should be drawn
-  protected errorSteps = computed(() => {
-    const d = this.drama();
+  // Calculates how many "bad parts" should be drawn
+  protected cntBad = computed(() => {
+    const d = this.dynamic();
     if (!d) return 0;
-    // We assume that the hangman SVG has 11 steps.
-    // drama().danger is a rational number (cntIncorrectGuesses / maxCntIncorrectGuesses).
-    // Since maxCntIncorrectGuesses is set to 11 in game.state,
-    // we map the ratio to our 11 SVG steps.
-    return Math.floor(d.danger.toDouble() * 11);
+    return d?.cntBad;
   });
 
   protected getStarTransform(steps: number): string {

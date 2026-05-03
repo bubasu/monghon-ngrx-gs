@@ -1,37 +1,34 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GameActions, gameFeature } from '../game.state';
 import { FormsModule } from '@angular/forms';
 import { WheelPickerComponent } from '../wheel-picker/wheel-picker.component';
-import { RandomWordService } from '../random-word.service';
 import { Illustration } from '../illustration/illustration';
-import { JsonPipe } from '@angular/common';
 import { Util } from '../util';
-import { StoryEnum } from '../model';
+import { Scenario } from '../model';
 
-const STORY_LABELS: Record<StoryEnum, string> = {
-  [StoryEnum.HANGMAN]: 'Hangman',
-  [StoryEnum.FLOWER]: 'Flower',
-  [StoryEnum.BOMB]: 'Bomb',
+const SCENARIO_LABELS: Record<Scenario, string> = {
+  [Scenario.HANGMAN]: 'Hangman',
+  [Scenario.FLOWER]: 'Flower',
+  [Scenario.BOMB]: 'Bomb',
 };
 
 @Component({
   selector: 'app-game',
-  imports: [FormsModule, WheelPickerComponent, Illustration, JsonPipe],
+  imports: [FormsModule, WheelPickerComponent, Illustration],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
 export class GameComponent implements OnInit {
   private readonly store = inject(Store);
-  private randomWordService = inject(RandomWordService);
   game = this.store.selectSignal(gameFeature.selectGameState);
-  protected guessedLetter = signal('');
+  protected letter = signal('');
 
   protected readonly alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
 
-  protected allStories = Object.values(StoryEnum);
-  protected selectedStory = signal(StoryEnum.HANGMAN);
-  protected STORY_LABELS = STORY_LABELS;
+  protected allScenarios = Object.values(Scenario);
+  protected selectedScenario = signal(Scenario.HANGMAN);
+  protected SCENARIO_LABELS = SCENARIO_LABELS;
 
   ngOnInit(): void {
     this.startNewGame();
@@ -42,25 +39,14 @@ export class GameComponent implements OnInit {
   }
 
   guessLetter() {
-    this.store.dispatch(GameActions.guessLetter({ letter: this.guessedLetter() }));
-    // this.guessedLetter.set('');
+    this.store.dispatch(GameActions.guessLetter({ letter: this.letter() }));
   }
 
-  onOptionPicked($event: string) {
-    this.guessedLetter.set($event);
+  setLetter(letter: string) {
+    this.letter.set(letter);
   }
 
-  protected fetchRandomWord() {
-    this.randomWordService.fetchWord().subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  protected story() {
-    return StoryEnum.HANGMAN; // TODO from select
-  }
-
-  protected drama() {
-    return Util.deriveDrama(this.game());
+  protected dynamic() {
+    return Util.deriveDynamic(this.game());
   }
 }

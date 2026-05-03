@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { GameComponent } from './game/game.component';
 
 @Component({
@@ -9,5 +8,5 @@ import { GameComponent } from './game/game.component';
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('monghon-ngrx-gs');
+  protected readonly title = signal('monghon');
 }

@@ -1,5 +1,3 @@
-import { Rational } from './rational';
-
 export type GamePhase = 'Initial' | 'Playing' | 'Won' | 'Lost';
 
 export interface Game {
@@ -10,16 +8,14 @@ export interface Game {
   maxCntIncorrectGuesses: number;
 }
 
-export interface GameContext {
-  game: Game;
+export interface Dynamic {
+  cntBad: number,
+  maxBad: number,
+  cntGood: number,
+  maxGood: number,
 }
 
-export interface DramaIndicator {
-  danger: Rational;
-  defense: Rational;
-}
-
-export enum StoryEnum {
+export enum Scenario {
   HANGMAN = 'Hangman',
   FLOWER = 'Flower',
   BOMB = 'Bomb',

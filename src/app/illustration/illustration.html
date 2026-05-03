@@ -15,107 +15,107 @@
 
 <!-- src/app/illustration/illustration.html -->
 <div class="illustration-container">
-  @if (story() === StoryEnum.HANGMAN) {
+  @if (scenario() === Scenario.HANGMAN) {
     <svg viewBox="0 0 200 250" class="hangman-svg" width="200" height="250">
       <!-- Ground (always visible from the 1st mistake onward, or as a base) -->
-      @if (errorSteps() >= 1) {
+      @if (cntBad() >= 1) {
         <line x1="20" y1="230" x2="180" y2="230.01" stroke="black" stroke-width="3" />
       }
 
       <!-- Gallows -->
-      @if (errorSteps() >= 2) {
+      @if (cntBad() >= 2) {
         <line x1="50" y1="230" x2="50.01" y2="20" stroke="black" stroke-width="3" />
       }
-      @if (errorSteps() >= 3) {
+      @if (cntBad() >= 3) {
         <line x1="50" y1="20" x2="150" y2="20.01" stroke="black" stroke-width="3" />
       }
-      @if (errorSteps() >= 4) {
+      @if (cntBad() >= 4) {
         <line x1="50" y1="60" x2="90" y2="20" stroke="black" stroke-width="3" />
       }
       <!-- Diagonal beam -->
-      @if (errorSteps() >= 5) {
+      @if (cntBad() >= 5) {
         <line x1="150" y1="20" x2="150.01" y2="50" stroke="black" stroke-width="3" />
       }
 
       <!-- Figure -->
-      @if (errorSteps() >= 6) {
+      @if (cntBad() >= 6) {
         <circle cx="150" cy="70" r="20" fill="none" stroke="black" stroke-width="3" />
       }
       <!-- Head -->
-      @if (errorSteps() >= 7) {
+      @if (cntBad() >= 7) {
         <line x1="150" y1="90" x2="150.01" y2="150" stroke="black" stroke-width="3" />
       }
       <!-- Body -->
-      @if (errorSteps() >= 8) {
+      @if (cntBad() >= 8) {
         <line x1="150" y1="110" x2="120" y2="130" stroke="black" stroke-width="3" />
       }
       <!-- Left arm -->
-      @if (errorSteps() >= 9) {
+      @if (cntBad() >= 9) {
         <line x1="150" y1="110" x2="180" y2="130" stroke="black" stroke-width="3" />
       }
       <!-- Right arm -->
-      @if (errorSteps() >= 10) {
+      @if (cntBad() >= 10) {
         <line x1="150" y1="150" x2="120" y2="190" stroke="black" stroke-width="3" />
       }
       <!-- Left leg -->
-      @if (errorSteps() >= 11) {
+      @if (cntBad() >= 11) {
         <line x1="150" y1="150" x2="180" y2="190" stroke="black" stroke-width="3" />
       }
       <!-- Right leg -->
     </svg>
   }
 
-  @if (story() === StoryEnum.FLOWER) {
+  @if (scenario() === Scenario.FLOWER) {
     <svg viewBox="0 0 200 250" class="flower-svg" width="200" height="250">
       <!-- Ground (disappears at mistake 11) -->
-      @if (errorSteps() <= 10) {
+      @if (cntBad() <= 10) {
         <rect x="20" y="220" width="160" height="10" fill="#8B4513" />
       }
 
       <!-- Stem (disappears at mistake 10) -->
-      @if (errorSteps() <= 9) {
+      @if (cntBad() <= 9) {
         <line x1="100" y1="220" x2="100.01" y2="100" stroke="green" stroke-width="4" />
       }
 
       <!-- Leaf 1 left (disappears at mistake 9) -->
-      @if (errorSteps() <= 8) {
+      @if (cntBad() <= 8) {
         <ellipse cx="85" cy="180" rx="15" ry="8" fill="green" transform="rotate(-30 85 180)" />
       }
 
       <!-- Leaf 2 right (disappears at mistake 8) -->
-      @if (errorSteps() <= 7) {
+      @if (cntBad() <= 7) {
         <ellipse cx="115" cy="160" rx="15" ry="8" fill="green" transform="rotate(30 115 160)" />
       }
 
       <!-- Petals 1-5 (disappear one by one for mistakes 6 to 10) -->
       <!-- Petal 1 (top) -->
-      @if (errorSteps() <= 5) {
+      @if (cntBad() <= 5) {
         <circle cx="100" cy="70" r="15" fill="#FFB6C1" />
       }
       <!-- Petal 2 (top right) -->
-      @if (errorSteps() <= 4) {
+      @if (cntBad() <= 4) {
         <circle cx="125" cy="85" r="15" fill="#FFB6C1" />
       }
       <!-- Petal 3 (bottom right) -->
-      @if (errorSteps() <= 3) {
+      @if (cntBad() <= 3) {
         <circle cx="115" cy="115" r="15" fill="#FFB6C1" />
       }
       <!-- Petal 4 (bottom left) -->
-      @if (errorSteps() <= 2) {
+      @if (cntBad() <= 2) {
         <circle cx="85" cy="115" r="15" fill="#FFB6C1" />
       }
       <!-- Petal 5 (top left) -->
-      @if (errorSteps() <= 1) {
+      @if (cntBad() <= 1) {
         <circle cx="75" cy="85" r="15" fill="#FFB6C1" />
       }
 
       <!-- Flower center (disappears at mistake 7) -->
-      @if (errorSteps() <= 6) {
+      @if (cntBad() <= 6) {
         <circle cx="100" cy="100" r="20" fill="yellow" stroke="orange" stroke-width="2" />
       }
 
       <!-- Bee (disappears at mistake 1) -->
-      @if (errorSteps() <= 0) {
+      @if (cntBad() <= 0) {
         <g transform="translate(130, 40)">
           <ellipse cx="0" cy="0" rx="10" ry="7" fill="yellow" stroke="black" />
           <line x1="-3" y1="-7" x2="-3" y2="7" stroke="black" stroke-width="2" />
@@ -126,27 +126,27 @@
       }
     </svg>
   }
-  @if (story() === StoryEnum.BOMB) {
+  @if (scenario() === Scenario.BOMB) {
     <svg viewBox="0 0 200 250" class="bomb-svg" width="200" height="250">
       <!-- 1. Bomb (circle) -->
-      @if (errorSteps() >= 1) {
+      @if (cntBad() >= 1) {
         <circle cx="100" cy="150" r="40" fill="black" />
       }
 
       <!-- 2. Mount (rectangle) -->
-      @if (errorSteps() >= 2) {
+      @if (cntBad() >= 2) {
         <rect x="120" y="115" width="15" height="15" fill="gray" transform="rotate(-30 120 115)" />
       }
 
       <!-- 3. Fuse (sine line) -->
-      @if (errorSteps() >= 3) {
+      @if (cntBad() >= 3) {
         <path d="M 132 108 Q 145 90 160 100 T 185 95" stroke="brown" stroke-width="3" fill="none" />
       }
 
       <!-- 4-10. Burning star moves along the fuse -->
       <!-- Step 4: At the end of the fuse -->
-      @if (errorSteps() >= 4 && errorSteps() < 11) {
-        <g [attr.transform]="getStarTransform(errorSteps())">
+      @if (cntBad() >= 4 && cntBad() < 11) {
+        <g [attr.transform]="getStarTransform(cntBad())">
           <path
             d="M 0 -10 L 3 -3 L 10 -3 L 5 2 L 7 9 L 0 5 L -7 9 L -5 2 L -10 -3 L -3 -3 Z"
             fill="orange"
@@ -156,7 +156,7 @@
       }
 
       <!-- 11. Explosion -->
-      @if (errorSteps() >= 11) {
+      @if (cntBad() >= 11) {
         <g transform="translate(100, 150)">
           <path
             d="M -60 -60 L -20 -40 L 0 -80 L 20 -40 L 60 -60 L 40 -20 L 80 0 L 40 20 L 60 60 L 20 40 L 0 80 L -20 40 L -60 60 L -40 20 L -80 0 L -40 -20 Z"

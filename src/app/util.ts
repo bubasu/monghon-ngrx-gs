@@ -1,20 +1,17 @@
-import { DramaIndicator, Game } from './model';
-import { Rational } from './rational';
+import { Dynamic, Game } from './model';
 
 export class Util {
-  static percentGood(game: Game): number {
-    // Number of correct letters compared to the length of the
-    return 0;
-  }
 
-  static countGuessedChars(word: string): number {
+  private static countGuessedChars(word: string): number {
     return word.split('').filter((c) => c !== '_').length;
   }
 
-  static deriveDrama(game: Game): DramaIndicator {
+  static deriveDynamic(game: Game): Dynamic {
     return {
-      danger: new Rational(game.cntIncorrectGuesses, game.maxCntIncorrectGuesses),
-      defense: new Rational(Util.countGuessedChars(game.guessedWord), game.targetWord.length),
+      cntBad: game.cntIncorrectGuesses,
+      maxBad: game.maxCntIncorrectGuesses,
+      cntGood: Util.countGuessedChars(game.guessedWord),
+      maxGood: game.targetWord.length,
     };
   }
 }
