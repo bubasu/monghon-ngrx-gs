@@ -103,9 +103,23 @@ export class WheelPickerComponent implements AfterViewInit {
   scrollToOption(index: number) {
     const container = this.scrollContainer.nativeElement;
 
-    const left = this.circular()
-      ? (index + Math.min(this.cloneCount, this.options().length)) * this.itemWidth
-      : index * this.itemWidth;
+    let left = index * this.itemWidth;
+
+    if (this.circular()) {
+      const n = this.options().length;
+      if (n > 0) {
+        const c = Math.min(this.cloneCount, n);
+        const currentIndex = Math.round(container.scrollLeft / this.itemWidth);
+        const baseIndex = index + c;
+        const candidates = [baseIndex - n, baseIndex, baseIndex + n];
+
+        const nearestIndex = candidates.reduce((closest, candidate) => {
+          return Math.abs(candidate - currentIndex) < Math.abs(closest - currentIndex) ? candidate : closest;
+        }, candidates[0]);
+
+        left = nearestIndex * this.itemWidth;
+      }
+    }
 
     container.scrollTo({
       left,
