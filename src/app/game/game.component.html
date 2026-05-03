@@ -37,7 +37,7 @@
         #guessLetterBtn
         id="guessLetterBtn"
         (click)="guessLetter()"
-        class="pencil-btn icon-btn"
+        class="guess-btn icon-btn"
         title="Buchstaben raten"
       >
         <svg
@@ -54,7 +54,7 @@
     </div>
 
     @if (game().phase === 'Won' || game().phase === 'Lost') {
-      <button (click)="startNewGame()" class="pencil-btn new-game-btn">New Game</button>
+      <button (click)="startNewGame()" class="guess-btn new-game-btn">New Game</button>
     }
   </div>
 </div>

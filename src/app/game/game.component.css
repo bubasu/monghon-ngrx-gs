@@ -31,13 +31,6 @@
   padding: 2px 5px;
 }
 
-.scenario-selector select:focus-visible {
-  outline: 2px solid var(--pencil-color);
-  outline-offset: 2px;
-  border-radius: 6px;
-  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
-}
-
 .illustration-wrapper {
   flex-grow: 1;
   display: flex;
@@ -82,7 +75,7 @@ app-illustration {
   gap: 1rem;
 }
 
-.pencil-btn {
+.guess-btn {
   background: transparent;
   border: 2px solid var(--pencil-color);
   padding: 0.5rem 1rem;
@@ -92,16 +85,16 @@ app-illustration {
   font-size: 1.1rem;
 }
 
-.pencil-btn:hover {
+.guess-btn:hover {
   transform: rotate(-1deg) scale(1.05);
   box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
 }
 
-.pencil-btn:active {
+.guess-btn:active {
   transform: scale(0.95);
 }
 
-.pencil-btn.is-pressed {
+.guess-btn.is-pressed {
   transform: scale(0.95);
 }
 
