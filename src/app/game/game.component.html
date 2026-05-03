@@ -22,6 +22,7 @@
     <div class="input-row">
       <app-wheel-picker
         [options]="alphabet"
+        [circular]="true"
         (optionPicked)="setLetter($event)"
       ></app-wheel-picker>
 
